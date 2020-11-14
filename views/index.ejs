@@ -1,0 +1,96 @@
+<%- include('./partials/header')-%>
+
+<script defer src="/script.js"></script>
+</head>
+
+<body>
+        <div id="video-grid"></div>
+        <div class="chat-container">
+            <header class="chat-header">
+                <h1><i class="fas fa-smile"></i> VideoApp</h1>
+                <form action="/logout" method="POST">
+                    <button type="submit" class="btn">Log out</button>
+                </form>
+            </header>
+            <% if(user) { %>
+            <input type="hidden" id="id" value="<%= user._id.toString() %>">
+            <input type="hidden" id="username" value="<%= user.username %>">
+            <input type="hidden" id="roomId" value="<%= roomId %>">
+            <% } %>
+            <main class="chat-main">
+                <div class="chat-sidebar">
+                    <h3></i> Filter By City:</h3>
+                    <form class="form-inline my-2 my-lg-0" method="GET" action="/usersByCity">
+                        <input class="form-control form-control-sm mr-sm-0 " style="width: 165px;" type="search"
+                            placeholder="Filter Users" name="city" value="<%= searchOption.city %>">
+                        <button class="btn filter" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                    <% if(filteredUsers) { %>
+                    <ul class="list-unstyled">
+                        <% filteredUsers.forEach(fUser => { %>
+                        <% if(fUser._id == user._id) {
+                                return;
+                            } else{ %>
+                        <li class="user-list-item">
+                            <span class="user-item"><%= fUser.username %></span>
+                            <span class="status <%= fUser.isActive ? 'green' : 'red' %>"></span>
+                        </li>
+                        <% } %>
+                        <% }) %>
+                    </ul>
+                    <% } else{ %>
+                    <ul class="list-unstyled">
+                        <% allUsers.forEach(aUser => { %>
+                        <% if(aUser._id == user._id) {
+                                return;
+                            } else{ %>
+                        <li class="user-list-item">
+                            <span class="user-item"><%= aUser.username %></span>
+                            <span class="status <%= aUser.isActive ? 'green' : 'red' %>"></span>
+                        </li>
+                        <% } %>
+                        <% }) %>
+                    </ul>
+                    <!-- <p>No Result Yet.</p> -->
+                    <% } %>
+                </div>
+                <div class="chat-messages">
+                    <div class="note-msg"></div>
+                    <h1 class="text-center mt-1 mb-2"><%= title%></h1>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="/users">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search Users" name="username"
+                                value="<%= searchOption.username %>">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <% if(usersByName) { %>
+                    <table class="table mt-2">
+                        <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% usersByName.forEach(usr => { %>
+                            <% if(usr._id == user._id) {
+                                    return;
+                                } else{ %>
+                            <tr>
+                                <td><%= usr.username %></td>
+                                <td><span class="status <%= usr.isActive ? 'green' : 'red' %>"></span></td>
+                            </tr>
+                            <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                    <% } else{ %>
+                    <p class="alert alert-primary mt-2 text-center">No Result Yet.</p>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+    </body>
+
+    </html>

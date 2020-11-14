@@ -1,0 +1,36 @@
+<%- include('./partials/header')-%>
+
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h1 class="text-center"><%= title%></h1>
+        <div class="card mx-auto my-3" style="width: 20rem;">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary mx-auto d-block">Sign Up</button>
+                </form>
+            </div>
+        </div>
+        <p class="text-center">Already have an account? <a class="text-primary" href="/login">Login</a></p>
+    </div>
+
+</body>
+
+</html>
